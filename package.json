@@ -4,9 +4,9 @@
   "author": "Abel Tran",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node --files src/app.ts",
+    "start": "node -r tsconfig-paths/register build/app.js",
     "start:test": "cross-env NODE_ENV='test' DB_DATABASE='jira_test' npm start",
-    "start:production": "node -- -r ./tsconfig-paths.js build/index.js",
+    "dev": "ts-node --files src/app.ts",
     "build": "cd src && tsc",
     "pre-commit": "lint-staged"
   },
