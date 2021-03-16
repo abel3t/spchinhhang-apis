@@ -14,4 +14,8 @@ app.get('/', (_req, res) => {
   return res.json({ data: 'Hello World!'})
 })
 
+app.get('/check-heath', (_req, res) => {
+  return res.json({ data: 'Good'})
+})
+
 app.listen(8080, () => console.log(''))
