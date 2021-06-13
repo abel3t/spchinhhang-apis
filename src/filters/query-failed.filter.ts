@@ -25,7 +25,7 @@ export class QueryFailedFilter implements ExceptionFilter {
     response.status(status).json({
       statusCode: status,
       error: STATUS_CODES[status],
-      message: errorMessage,
+      message: errorMessage
     });
   }
 }

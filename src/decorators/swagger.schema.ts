@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import type { Type } from '@nestjs/common';
 import { applyDecorators } from '@nestjs/common';
 import {
   PARAMTYPES_METADATA,
-  ROUTE_ARGS_METADATA,
+  ROUTE_ARGS_METADATA
 } from '@nestjs/common/constants';
 import { RouteParamtypes } from '@nestjs/common/enums/route-paramtypes.enum';
 import { ApiBody, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
@@ -17,13 +16,13 @@ function explore(instance: any, propertyKey: string) {
   const types: Array<Type<unknown>> = Reflect.getMetadata(
     PARAMTYPES_METADATA,
     instance,
-    propertyKey,
+    propertyKey
   );
   const routeArgsMetadata =
     Reflect.getMetadata(
       ROUTE_ARGS_METADATA,
       instance.constructor,
-      propertyKey,
+      propertyKey
     ) || {};
 
   const parametersWithType = mapValues(
@@ -31,8 +30,8 @@ function explore(instance: any, propertyKey: string) {
     (param) => ({
       type: types[param.index],
       name: param.data,
-      required: true,
-    }),
+      required: true
+    })
   );
 
   for (const [key, value] of Object.entries(parametersWithType)) {
@@ -44,67 +43,67 @@ function explore(instance: any, propertyKey: string) {
   }
 }
 
-const RegisterModels = (): MethodDecorator => (
-  target: any,
+const registerModel = (
+  target: never,
   propertyKey: string,
-  descriptor: PropertyDescriptor,
+  descriptor: PropertyDescriptor
 ) => {
   const body = explore(target, propertyKey);
   return body && ApiExtraModels(body)(target, propertyKey, descriptor);
 };
 
-const ApiFileDecorator = (
-  files: IApiFile[] = [],
-  options: Partial<{ isRequired: boolean }> = {},
-): MethodDecorator => (
-  target: any,
-  propertyKey: string,
-  descriptor: PropertyDescriptor,
-) => {
-  const { isRequired = false } = options;
-  const fileSchema: SchemaObject = {
-    type: 'string',
-    format: 'binary',
-  };
-  let properties = {};
-  if (files) {
-    properties = files.reduce((filesMap, file) => {
-      if (file?.isArray) {
-        filesMap[file.name] = {
-          type: 'array',
-          items: fileSchema,
-        };
-      } else {
-        filesMap[file.name] = fileSchema;
-      }
-      return filesMap;
-    }, {});
-  }
+const RegisterModels = (): MethodDecorator => registerModel;
 
-  let schema: SchemaObject = {
-    properties,
-    type: 'object',
-  };
-  const body = explore(target, propertyKey);
-
-  if (body) {
-    schema = {
-      allOf: [
-        {
-          $ref: getSchemaPath(body),
-        },
-        { properties, type: 'object' },
-      ],
+const ApiFileDecorator =
+  (
+    files: IApiFile[] = [],
+    options: Partial<{ isRequired: boolean }> = {}
+  ): MethodDecorator =>
+  (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+    const { isRequired = false } = options;
+    const fileSchema: SchemaObject = {
+      type: 'string',
+      format: 'binary'
     };
-  }
+    let properties = {};
+    if (files) {
+      properties = files.reduce((filesMap, file) => {
+        if (file?.isArray) {
+          filesMap[file.name] = {
+            type: 'array',
+            items: fileSchema
+          };
+        } else {
+          filesMap[file.name] = fileSchema;
+        }
+        return filesMap;
+      }, {});
+    }
 
-  return ApiBody({
-    schema,
-    required: isRequired,
-  })(target, propertyKey, descriptor);
-};
+    let schema: SchemaObject = {
+      properties,
+      type: 'object'
+    };
+    const body = explore(target, propertyKey);
+
+    if (body) {
+      schema = {
+        allOf: [
+          {
+            $ref: getSchemaPath(body)
+          },
+          { properties, type: 'object' }
+        ]
+      };
+    }
+
+    return ApiBody({
+      schema,
+      required: isRequired
+    })(target, propertyKey, descriptor);
+  };
 
 export const ApiFile = (
   files: IApiFile[] = [],
-  options: Partial<{ isRequired: boolean }> = {},
+  options: Partial<{ isRequired: boolean }> = {}
 ) => applyDecorators(RegisterModels(), ApiFileDecorator(files, options));

@@ -5,7 +5,7 @@ import {
   ParseUUIDPipe,
   SetMetadata,
   UseGuards,
-  UseInterceptors,
+  UseInterceptors
 } from '@nestjs/common';
 import type { Type } from '@nestjs/common/interfaces';
 import { ApiBearerAuth, ApiUnauthorizedResponse } from '@nestjs/swagger';
@@ -21,7 +21,7 @@ export function Auth(...roles: RoleType[]) {
     UseGuards(AuthGuard, RolesGuard),
     ApiBearerAuth(),
     UseInterceptors(AuthUserInterceptor),
-    ApiUnauthorizedResponse({ description: 'Unauthorized' }),
+    ApiUnauthorizedResponse({ description: 'Unauthorized' })
   );
 }
 

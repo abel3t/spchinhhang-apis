@@ -7,7 +7,7 @@ import {
   IsOptional,
   IsString,
   Max,
-  Min,
+  Min
 } from 'class-validator';
 
 import { Order } from '../constants/order';
@@ -15,7 +15,7 @@ import { Order } from '../constants/order';
 export class PageOptionsDto {
   @ApiPropertyOptional({
     enum: Order,
-    default: Order.ASC,
+    default: Order.ASC
   })
   @IsEnum(Order)
   @IsOptional()
@@ -23,7 +23,7 @@ export class PageOptionsDto {
 
   @ApiPropertyOptional({
     minimum: 1,
-    default: 1,
+    default: 1
   })
   @Type(() => Number)
   @IsInt()
@@ -34,7 +34,7 @@ export class PageOptionsDto {
   @ApiPropertyOptional({
     minimum: 1,
     maximum: 50,
-    default: 10,
+    default: 10
   })
   @Type(() => Number)
   @IsInt()

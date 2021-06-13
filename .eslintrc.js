@@ -8,7 +8,8 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: path.resolve(__dirname, './tsconfig.json'),
+    tsconfigRootDir: __dirname,
+    project: path.resolve('./tsconfig.json'),
     sourceType: 'module'
   },
   extends: [
@@ -70,6 +71,7 @@ module.exports = {
       }
     ],
     // '@typescript-eslint/indent': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {
@@ -85,9 +87,6 @@ module.exports = {
     ],
     '@typescript-eslint/member-ordering': 'off',
     '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
-    '@typescript-eslint/no-empty-function': 'error',
-    '@typescript-eslint/no-empty-interface': 'error',
-    '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-inferrable-types': 'error',
     '@typescript-eslint/await-thenable': 'error',
     '@typescript-eslint/ban-ts-comment': 'error',
@@ -100,14 +99,12 @@ module.exports = {
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
-    '@typescript-eslint/no-require-imports': 'error',
     'keyword-spacing': 'off',
     '@typescript-eslint/keyword-spacing': 'error',
     '@typescript-eslint/no-namespace': 'error',
     '@typescript-eslint/no-this-alias': 'error',
     '@typescript-eslint/no-use-before-define': 'error',
     '@typescript-eslint/no-use-before-declare': 'off',
-    '@typescript-eslint/no-var-requires': 'error',
     '@typescript-eslint/prefer-for-of': 'error',
     '@typescript-eslint/prefer-function-type': 'error',
     '@typescript-eslint/prefer-namespace-keyword': 'error',
@@ -151,7 +148,7 @@ module.exports = {
     'import/no-deprecated': 'warn',
     'import/no-internal-modules': 'off',
     'import/order': 'off',
-    'max-classes-per-file': ['error', 1],
+    'max-classes-per-file': ['error', 4],
     'max-len': [
       'error',
       {
@@ -227,7 +224,6 @@ module.exports = {
     'unicorn/no-array-callback-reference': 'error',
     'unicorn/no-array-for-each': 'error',
     'unicorn/no-array-push-push': 'error',
-    'unicorn/no-array-reduce': 'error',
     'unicorn/no-console-spaces': 'error',
     'unicorn/no-document-cookie': 'error',
     'unicorn/no-for-loop': 'error',

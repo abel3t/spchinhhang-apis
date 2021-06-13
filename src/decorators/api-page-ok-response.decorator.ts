@@ -6,7 +6,7 @@ import { PageDto } from '../common/dto/page.dto';
 
 export function ApiPageOkResponse<T extends Type>(
   model: T,
-  description?: string,
+  description?: string
 ) {
   return applyDecorators(
     ApiExtraModels(PageDto),
@@ -19,12 +19,12 @@ export function ApiPageOkResponse<T extends Type>(
             properties: {
               results: {
                 type: 'array',
-                items: { $ref: getSchemaPath(model) },
-              },
-            },
-          },
-        ],
-      },
-    }),
+                items: { $ref: getSchemaPath(model) }
+              }
+            }
+          }
+        ]
+      }
+    })
   );
 }

@@ -1,9 +1,9 @@
 {
-    "language": "ts",
-    "collection": "@nestjs/schematics",
-    "sourceRoot": "src",
-    "compilerOptions": {
-        "plugins": ["@nestjs/swagger/plugin"],
-        "assets": ["i18n/*"]
-    }
+  "language": "ts",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "plugins": ["@nestjs/swagger/plugin"],
+    "assets": ["i18n/*"]
+  }
 }

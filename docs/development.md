@@ -85,6 +85,7 @@ nest generate service users
 nest g class users
 
 ```
+
 > Note: if you love generators then you can find full list of command in official [Nest-cli Docs](https://docs.nestjs.com/cli/usages#generate-alias-g).
 
 ## Docker

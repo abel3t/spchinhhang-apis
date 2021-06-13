@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
-  MinLength,
+  MinLength
 } from 'class-validator';
 import { Column } from 'typeorm';
 

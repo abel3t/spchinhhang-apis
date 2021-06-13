@@ -98,7 +98,7 @@ We are using snake naming strategy for typeorm, so when you will generate migrat
 
 ## `.*.env`
 
-Environment variables which will load before app start and will be stored in `process.env`, (*) is a env name (development, staging, production, ...)
+Environment variables which will load before app start and will be stored in `process.env`, (\*) is a env name (development, staging, production, ...)
 
 ## `.eslintrc.json`
 

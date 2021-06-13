@@ -15,12 +15,12 @@ declare global {
   interface Array<T> {
     toDtos<T extends AbstractEntity<Dto>, Dto extends AbstractDto>(
       this: T[],
-      options?: any,
+      options?: any
     ): Dto[];
 
     toPageDto<T extends AbstractEntity<Dto>, Dto extends AbstractDto>(
       this: T[],
-      pageMetaDto: PageMetaDto,
+      pageMetaDto: PageMetaDto
     ): PageDto<Dto>;
   }
 }
@@ -33,7 +33,7 @@ declare module 'typeorm' {
   interface SelectQueryBuilder<Entity> {
     paginate(
       this: SelectQueryBuilder<Entity>,
-      pageOptionsDto: PageOptionsDto,
+      pageOptionsDto: PageOptionsDto
     ): Promise<{ items: Entity[]; pageMetaDto: PageMetaDto }>;
   }
 }
@@ -42,9 +42,7 @@ Array.prototype.toDtos = function <
   T extends AbstractEntity<Dto>,
   Dto extends AbstractDto
 >(options?: any): Dto[] {
-  return compact(
-    map<T, Dto>(this, (item) => item.toDto(options)),
-  );
+  return compact(map<T, Dto>(this, (item) => item.toDto(options)));
 };
 
 Array.prototype.toPageDto = function (pageMetaDto: PageMetaDto) {
@@ -60,7 +58,7 @@ QueryBuilder.prototype.searchByString = function (q, columnNames) {
       for (const item of columnNames) {
         qb.orWhere(`${item} ILIKE :q`);
       }
-    }),
+    })
   );
 
   this.setParameter('q', `%${q}%`);
@@ -69,10 +67,10 @@ QueryBuilder.prototype.searchByString = function (q, columnNames) {
 };
 
 SelectQueryBuilder.prototype.paginate = async function (
-  pageOptionsDto: PageOptionsDto,
+  pageOptionsDto: PageOptionsDto
 ) {
   const selectQueryBuilder = this.skip(pageOptionsDto.skip).take(
-    pageOptionsDto.take,
+    pageOptionsDto.take
   );
   const itemCount = await selectQueryBuilder.getCount();
 
@@ -90,7 +88,7 @@ SelectQueryBuilder.prototype.paginate = async function (
 
   const pageMetaDto = new PageMetaDto({
     itemCount,
-    pageOptionsDto,
+    pageOptionsDto
   });
 
   return { items, pageMetaDto };
