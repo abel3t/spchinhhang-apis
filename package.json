@@ -19,7 +19,7 @@
         "watch:dev": "nodemon --config nodemon.json",
         "debug:dev": "nodemon --config nodemon-debug.json",
         "webpack": "webpack --config webpack.config.js --progress",
-        "lint": "eslint . --ext .ts",
+        "lint": "eslint . --ext .js,.ts",
         "lint:fix": "eslint --fix . --ext .ts",
         "test": "jest",
         "test:watch": "jest --watch",
@@ -137,7 +137,9 @@
     },
     "lint-staged": {
         "*.ts": [
-            "eslint --fix",
+            "npm run lint:fix",
+            "npm run lint",
+            "prettier --write",
             "git add"
         ]
     }
