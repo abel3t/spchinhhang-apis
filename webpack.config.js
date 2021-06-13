@@ -1,10 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
 const path = require('path');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
 const webpack = require('webpack');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
         exclude: /node_modules/,
         options: {
           getCustomTransformers: (program) => ({
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            // eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
             before: [require('@nestjs/swagger/plugin').before({}, program)]
           })
         }
