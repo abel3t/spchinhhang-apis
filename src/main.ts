@@ -1,6 +1,7 @@
 import {
   ClassSerializerInterceptor,
   HttpStatus,
+  Logger,
   UnprocessableEntityException,
   ValidationPipe
 } from '@nestjs/common';
@@ -68,12 +69,12 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
     '0.0.0.0',
     (err: Error, address: string) => {
       if (!err) {
-        console.log(`\n\n\nServer started at ${address}\n\n`);
+        Logger.log(`\n\n\nServer started at ${address}\n\n`);
 
         return;
       }
 
-      console.log(err);
+      Logger.log(err);
     }
   );
 
