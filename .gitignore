@@ -80,3 +80,4 @@ mongo
 db-data
 
 .vercel
+.env
