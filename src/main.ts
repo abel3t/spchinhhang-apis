@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import {
   ClassSerializerInterceptor,
   HttpStatus,
@@ -27,7 +29,6 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
     new FastifyAdapter()
   );
 
-  await app.register(fastifyCookie);
   await app.register(fastifyCookie);
   await app.register(fmp);
   await app.register(fastifyCsrf, { cookieKey: 'X-CSRF-Token' });
@@ -63,7 +64,7 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
-  const port = 8080;
+  const port = 3000;
   await app.listen(
     process.env.PORT || port,
     '0.0.0.0',
@@ -78,7 +79,7 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
     }
   );
 
-  console.info(`server running on port ${port}`);
+  console.info(`server running on port ${process.env.PORT || port}`);
 
   return app;
 }

@@ -2,6 +2,7 @@ import './boilerplate.polyfill';
 
 import type { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 
 import { contextMiddleware } from './middlewares';
@@ -10,6 +11,11 @@ import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env']
+      // envFilePath: ['.env.production']
+    }),
     AuthModule,
     SharedModule,
     ThrottlerModule.forRoot({

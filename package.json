@@ -18,7 +18,6 @@
     "schema:drop": "yarn run typeorm schema:drop",
     "watch:dev": "nodemon --config nodemon.json",
     "debug:dev": "nodemon --config nodemon-debug.json",
-    "webpack": "webpack --config webpack.config.js --progress",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint --fix . --ext .ts",
     "test": "jest",
@@ -87,9 +86,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/eslint-plugin-tslint": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
-    "clean-webpack-plugin": "^3.0.0",
     "copyfiles": "^2.4.1",
-    "cross-env": "^7.0.3",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-import": "^2.22.1",
@@ -112,10 +109,7 @@
     "tslint-eslint-rules": "^5.4.0",
     "tslint-plugin-prettier": "^2.3.0",
     "typescript": "^4.2.4",
-    "vuepress": "^1.8.2",
-    "webpack": "^5.35.1",
-    "webpack-cli": "^4.6.0",
-    "webpack-node-externals": "^3.0.0"
+    "vuepress": "^1.8.2"
   },
   "jest": {
     "moduleFileExtensions": [
