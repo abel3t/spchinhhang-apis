@@ -8,6 +8,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { contextMiddleware } from './middlewares';
 import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './shared/shared.module';
+import { AppControler } from './app.controler';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { SharedModule } from './shared/shared.module';
       ttl: 60,
       limit: 10
     })
-  ]
+  ],
+  controllers: [AppControler]
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
