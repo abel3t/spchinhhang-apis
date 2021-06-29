@@ -1,12 +1,9 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
-@Entity({
-  name: 'users'
-})
-export class UserEntity {
-  @ObjectIdColumn()
-  _id: ObjectID;
+import { BaseEntity } from './base.entity';
 
+@Entity('User')
+export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar', width: 64, nullable: true })
   name: string;
 

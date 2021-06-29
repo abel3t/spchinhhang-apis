@@ -30,7 +30,7 @@ yarn install
 
 ### Database
 
-> Note: NestJs Core uses [TypeORM](https://github.com/typeorm/typeorm) with Data Mapper pattern.
+> Note: spchinhhang-apis uses [TypeORM](https://github.com/typeorm/typeorm) with Data Mapper pattern.
 
 ### Configuration
 

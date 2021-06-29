@@ -20,7 +20,7 @@ import { fastifyHelmet } from 'fastify-helmet';
 import fmp from 'fastify-multipart';
 
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './filters/bad-request.filter';
+import { ErrorExceptionFilter } from './filters/error.filter';
 import { QueryFailedFilter } from './filters/query-failed.filter';
 
 export async function bootstrap(): Promise<NestFastifyApplication> {
@@ -39,8 +39,8 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
   const reflector = app.get(Reflector);
 
   app.useGlobalFilters(
-    new HttpExceptionFilter(reflector),
-    new QueryFailedFilter(reflector)
+    new QueryFailedFilter(reflector),
+    new ErrorExceptionFilter()
   );
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
@@ -56,8 +56,8 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('NestJs Core APIs')
-    .setDescription('NestJs Core APIs')
+    .setTitle('spchinhhang APIs')
+    .setDescription('spchinhhang APIs')
     .setVersion('0.0.1')
     .addBearerAuth()
     .build();

@@ -5,10 +5,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 
+import { AppControler } from './app.controler';
 import { contextMiddleware } from './middlewares';
 import { AuthModule } from './modules/auth/auth.module';
+import { ProductModule } from './modules/product/product.module';
 import { SharedModule } from './shared/shared.module';
-import { AppControler } from './app.controler';
 
 @Module({
   imports: [
@@ -17,8 +18,9 @@ import { AppControler } from './app.controler';
       envFilePath: ['.env']
       // envFilePath: ['.env.production']
     }),
-    AuthModule,
     SharedModule,
+    AuthModule,
+    ProductModule,
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 10
