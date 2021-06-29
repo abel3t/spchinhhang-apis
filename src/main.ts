@@ -15,6 +15,7 @@ import {
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import compression from 'compression';
 import fastifyCookie from 'fastify-cookie';
+import fastifyCors from 'fastify-cors';
 import fastifyCsrf from 'fastify-csrf';
 import { fastifyHelmet } from 'fastify-helmet';
 import fmp from 'fastify-multipart';
@@ -33,6 +34,22 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
   await app.register(fmp);
   await app.register(fastifyCsrf, { cookieKey: 'X-CSRF-Token' });
   await app.register(fastifyHelmet);
+  await app.register(fastifyCors, {
+    origin: [
+      'http://localhost:3000',
+      'https://dev.spchinhhang.com',
+      'https://staging.spchinhhang.com',
+      'https://spchinhhang.com'
+    ],
+    allowedHeaders: [
+      'Origin',
+      'X-Requested-With',
+      'Accept',
+      'Content-Type',
+      'Authorization'
+    ],
+    methods: ['GET', 'PUT', 'OPTIONS', 'POST', 'DELETE']
+  });
 
   app.use(compression());
 
