@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import getUnixTime from 'date-fns/getUnixTime';
+import { ObjectID } from 'mongodb';
 
 import { ICustomPagination } from '../../decorators/paging.decorator';
 import { Product } from '../../shared/entities/product.entity';
 import { ProductRepository } from '../../shared/repositories/product.repesitory';
-import { CreateProductDto } from './product.dto';
+import { AddProductCategoryDto, CreateProductDto } from './product.dto';
 
 @Injectable()
 export class ProductService {
@@ -22,5 +23,24 @@ export class ProductService {
 
   getAllProducts(paginationOptions: ICustomPagination): Promise<unknown> {
     return this.productRepository.paginate(paginationOptions);
+  }
+
+  async addProductCategory({
+    productId,
+    categoryId
+  }: AddProductCategoryDto): Promise<unknown> {
+    return await this.productRepository.findOneAndUpdate(
+      {
+        _id: ObjectID(productId)
+      },
+      {
+        $push: {
+          categories: {
+            categoryId,
+            isFeatured: false
+          }
+        }
+      }
+    );
   }
 }

@@ -67,3 +67,21 @@ export class CreateProductDto {
   @ArrayMaxSize(99)
   photos: string[];
 }
+
+export class AddProductCategoryDto {
+  @ApiProperty({
+    example: '60bdbbf92339455d3d5f84d7',
+    description: 'The ObjectID of product'
+  })
+  @IsString()
+  @IsNotEmpty()
+  productId: string;
+
+  @ApiProperty({
+    example: '60bdbbf92339455d3d5f84d8',
+    description: 'The ObjectID of category'
+  })
+  @IsString()
+  @IsNotEmpty()
+  categoryId: string;
+}

@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
 
 import { BaseEntity, IBaseEntity } from './base.entity';
 
@@ -77,9 +77,22 @@ export class Product extends BaseEntity {
   @Column({ default: 0 })
   viewed?: number;
 
-  @Column({ default: [] })
-  categories?: unknown[];
+  @Column('array')
+  categories: ProductCategory[];
 
   @Column()
-  photos?: unknown[];
+  photos: string[];
+
+  @BeforeInsert()
+  init(): void {
+    this.categories = [];
+  }
+}
+
+class ProductCategory {
+  @Column()
+  isFeatured: boolean;
+
+  @Column()
+  categoryId: string;
 }

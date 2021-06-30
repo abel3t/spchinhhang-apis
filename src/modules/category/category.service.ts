@@ -1,10 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import getUnixTime from 'date-fns/getUnixTime';
+import { ObjectID } from 'mongodb';
 
+import { ICustomPagination } from '../../decorators/paging.decorator';
 import { Category } from '../../shared/entities/category.entity';
 import { CategoryRepository } from '../../shared/repositories/category.repository';
 import { CreateCategoryDto } from './category.dto';
-import { ICustomPagination } from '../../decorators/paging.decorator';
+
 @Injectable()
 export class CategoryService {
   constructor(private categoryRepository: CategoryRepository) {}
@@ -12,7 +14,7 @@ export class CategoryService {
   async createNewCategory(categoryDto: CreateCategoryDto): Promise<unknown> {
     if (categoryDto.parentId) {
       const parentCategory = await this.categoryRepository.findOne({
-        where: { _id: categoryDto.parentId }
+        _id: ObjectID(categoryDto.parentId)
       });
       if (!parentCategory) {
         throw new BadRequestException('Invalid parentId');

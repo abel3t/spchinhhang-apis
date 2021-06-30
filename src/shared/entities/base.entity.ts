@@ -1,4 +1,4 @@
-import { Column, ObjectID, ObjectIdColumn } from 'typeorm';
+import { BeforeInsert, Column, ObjectID, ObjectIdColumn } from 'typeorm';
 
 export interface IBaseEntity {
   id?: number;
@@ -28,6 +28,11 @@ export class BaseEntity {
   @Column({ nullable: true })
   updatedAt?: number;
 
-  @Column({ default: true })
+  @Column()
   isActive?: boolean;
+
+  @BeforeInsert()
+  init(): void {
+    this.isActive = true;
+  }
 }

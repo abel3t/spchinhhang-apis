@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { DEFAULT_MAX_LIMIT } from '../../constant';
@@ -6,7 +6,7 @@ import {
   ICustomPagination,
   PaginationParams
 } from '../../decorators/paging.decorator';
-import { CreateProductDto } from './product.dto';
+import { AddProductCategoryDto, CreateProductDto } from './product.dto';
 import { ProductService } from './product.service';
 
 @Controller('products')
@@ -33,5 +33,12 @@ export class ProductController {
   })
   createNewProduct(@Body() productDto: CreateProductDto): Promise<unknown> {
     return this.productService.createNewProduct(productDto);
+  }
+
+  @Put(':productId/categories/:categoryId')
+  addProductCategory(
+    @Param() productCategoryDto: AddProductCategoryDto
+  ): Promise<unknown> {
+    return this.productService.addProductCategory(productCategoryDto);
   }
 }
