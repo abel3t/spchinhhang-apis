@@ -4,8 +4,9 @@ import { Connection } from 'typeorm';
 import { MONGO_CONNECTION } from './database.provider';
 import { ProductRepository } from './repositories/product.repesitory';
 import { UserRepository } from './repositories/user.repository';
+import { CategoryRepository } from './repositories/category.repository';
 
-const repositories = [UserRepository, ProductRepository];
+const repositories = [UserRepository, ProductRepository, CategoryRepository];
 
 const RepositoriesProvider: Provider[] = [];
 

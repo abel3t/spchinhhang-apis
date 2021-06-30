@@ -19,7 +19,7 @@ export class CategoryController {
     status: 201,
     description: 'Get all categories'
   })
-  getAllProducts(
+  getAllCategories(
     @PaginationParams({ maxLimit: DEFAULT_MAX_LIMIT })
     paginationOptions: ICustomPagination
   ): Promise<unknown> {
@@ -31,7 +31,7 @@ export class CategoryController {
     status: 201,
     description: 'Create a new category'
   })
-  createNewProduct(@Body() categoryDto: CreateCategoryDto): Promise<unknown> {
+  createNewCategory(@Body() categoryDto: CreateCategoryDto): Promise<unknown> {
     return this.categoryService.createNewCategory(categoryDto);
   }
 }

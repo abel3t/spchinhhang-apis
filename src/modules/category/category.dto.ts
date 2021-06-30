@@ -31,7 +31,7 @@ export class CreateCategoryDto {
     description: 'The parentId of category'
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   parentId: string;
 
   @ApiProperty({
