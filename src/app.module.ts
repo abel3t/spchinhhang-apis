@@ -8,6 +8,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { AppControler } from './app.controler';
 import { contextMiddleware } from './middlewares';
 import { AuthModule } from './modules/auth/auth.module';
+import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -21,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     AuthModule,
     ProductModule,
+    CategoryModule,
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 10

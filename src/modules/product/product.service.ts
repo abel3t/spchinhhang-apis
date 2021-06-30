@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import getUnixTime from 'date-fns/getUnixTime';
 
+import { ICustomPagination } from '../../decorators/paging.decorator';
 import { Product } from '../../shared/entities/product.entity';
 import { ProductRepository } from '../../shared/repositories/product.repesitory';
 import { CreateProductDto } from './product.dto';
-import { ICustomPagination } from '../../decorators/paging.decorator';
 
 @Injectable()
 export class ProductService {

@@ -60,7 +60,7 @@ export class CreateProductDto {
     example: [
       'https://salt.tikicdn.com/cache/w64/ts/product/10/b0/91/6329969c3fce448f92114968db420fa7.jpg'
     ],
-    description: 'The old price of product'
+    description: 'The photos of product'
   })
   @IsArray()
   @ArrayMinSize(1)

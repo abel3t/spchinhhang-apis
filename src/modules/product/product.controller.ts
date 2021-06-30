@@ -1,18 +1,19 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { CreateProductDto } from './product.dto';
-import { ProductService } from './product.service';
 import { DEFAULT_MAX_LIMIT } from '../../constant';
 import {
   ICustomPagination,
   PaginationParams
 } from '../../decorators/paging.decorator';
+import { CreateProductDto } from './product.dto';
+import { ProductService } from './product.service';
 
 @Controller('products')
 @ApiTags('Products')
 export class ProductController {
   constructor(private productService: ProductService) {}
+
   @Get()
   @ApiResponse({
     status: 201,

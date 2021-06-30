@@ -27,4 +27,7 @@ export class BaseEntity {
 
   @Column({ nullable: true })
   updatedAt?: number;
+
+  @Column({ default: true })
+  isActive?: boolean;
 }

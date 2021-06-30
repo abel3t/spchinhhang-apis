@@ -3,16 +3,17 @@ import { Column, Entity } from 'typeorm';
 import { BaseEntity, IBaseEntity } from './base.entity';
 
 interface IProduct extends IBaseEntity {
-  name: string;
-  type: string;
-  price: string;
+  name?: string;
+  seName?: string;
+  type?: string;
+  price?: string;
   oldPrice?: string;
-  shortDescription: string;
-  description: string;
+  shortDescription?: string;
+  description?: string;
   sold?: number;
   viewed?: number;
   categories?: string[];
-  photos: string[];
+  photos?: string[];
 }
 
 @Entity('Product')
@@ -20,6 +21,7 @@ export class Product extends BaseEntity {
   constructor(props?: IProduct) {
     const {
       name,
+      seName,
       type,
       price,
       oldPrice,
@@ -35,6 +37,7 @@ export class Product extends BaseEntity {
 
     Object.assign(this, {
       name,
+      seName,
       type,
       price,
       oldPrice,
@@ -49,6 +52,9 @@ export class Product extends BaseEntity {
 
   @Column()
   name: string;
+
+  @Column()
+  seName: string;
 
   @Column()
   type: string;

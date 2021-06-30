@@ -39,7 +39,10 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
       'http://localhost:3000',
       'https://dev.spchinhhang.com',
       'https://staging.spchinhhang.com',
-      'https://spchinhhang.com'
+      'https://spchinhhang.com',
+      'https://dev.admin.spchinhhang.com',
+      'https://staging.admin.spchinhhang.com',
+      'https://admin.spchinhhang.com'
     ],
     allowedHeaders: [
       'Origin',
