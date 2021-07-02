@@ -87,7 +87,7 @@ The root application module.
 We extend built in classes so you can use helper function anywhere.
 
 ```typescript
-const users: UserEntity[] = ...;
+const users: User[] = ...;
 
 const userDtos = users.toDtos();
 ```

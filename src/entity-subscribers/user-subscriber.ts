@@ -6,21 +6,21 @@ import type {
 import { EventSubscriber } from 'typeorm';
 
 import { UtilsService } from '../providers/utils.service';
-import { UserEntity } from '../shared/entities/user.entity';
+import { User } from '../shared/entities/user.entity';
 
 @EventSubscriber()
-export class UserSubscriber implements EntitySubscriberInterface<UserEntity> {
+export class UserSubscriber implements EntitySubscriberInterface<User> {
   listenTo() {
-    return UserEntity;
+    return User;
   }
 
-  beforeInsert(event: InsertEvent<UserEntity>) {
+  beforeInsert(event: InsertEvent<User>) {
     if (event.entity.password) {
       event.entity.password = UtilsService.generateHash(event.entity.password);
     }
   }
 
-  beforeUpdate(event: UpdateEvent<UserEntity>) {
+  beforeUpdate(event: UpdateEvent<User>) {
     if (event.entity.password !== event.databaseEntity.password) {
       event.entity.password = UtilsService.generateHash(event.entity.password);
     }

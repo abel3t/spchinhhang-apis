@@ -1,6 +1,6 @@
 import requestContext from 'request-context';
 
-import { UserEntity } from '../shared/entities/user.entity';
+import { User } from '../shared/entities/user.entity';
 
 export class ContextService {
   private static readonly nameSpace = 'request';
@@ -19,7 +19,7 @@ export class ContextService {
     return `${ContextService.nameSpace}.${key}`;
   }
 
-  static setAuthUser(user: UserEntity): void {
+  static setAuthUser(user: User): void {
     ContextService.set(ContextService.authUserKey, user);
   }
 
@@ -31,7 +31,7 @@ export class ContextService {
     return ContextService.get(ContextService.languageKey);
   }
 
-  static getAuthUser(): UserEntity {
+  static getAuthUser(): User {
     return ContextService.get(ContextService.authUserKey);
   }
 }

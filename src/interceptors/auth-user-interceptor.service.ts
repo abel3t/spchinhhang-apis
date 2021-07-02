@@ -7,14 +7,14 @@ import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 import { ContextService } from '../providers/context.service';
-import { UserEntity } from '../shared/entities/user.entity';
+import { User } from '../shared/entities/user.entity';
 
 @Injectable()
 export class AuthUserInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
     const request = context.switchToHttp().getRequest();
 
-    const user = <UserEntity>request.user;
+    const user = <User>request.user;
     ContextService.setAuthUser(user);
 
     return next.handle();
