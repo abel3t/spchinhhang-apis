@@ -1,4 +1,11 @@
-import { BeforeInsert, Column, ObjectID, ObjectIdColumn } from 'typeorm';
+import { getUnixTime } from 'date-fns';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  ObjectID,
+  ObjectIdColumn
+} from 'typeorm';
 
 export interface IBaseEntity {
   id?: number;
@@ -30,9 +37,4 @@ export class BaseEntity {
 
   @Column()
   isActive?: boolean;
-
-  @BeforeInsert()
-  init(): void {
-    this.isActive = true;
-  }
 }

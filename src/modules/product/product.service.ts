@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import getUnixTime from 'date-fns/getUnixTime';
 import { ObjectID } from 'mongodb';
 
 import { ICustomPagination } from '../../decorators/paging.decorator';
@@ -12,12 +11,7 @@ export class ProductService {
   constructor(private productRepository: ProductRepository) {}
 
   async createNewProduct(productDto: CreateProductDto): Promise<unknown> {
-    const product = new Product({
-      ...productDto,
-      createdAt: getUnixTime(new Date())
-    });
-
-    await this.productRepository.save(product);
+    await this.productRepository.save(new Product(productDto));
     return true;
   }
 

@@ -1,6 +1,7 @@
-import { Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 
 import { BaseEntity, IBaseEntity } from './base.entity';
+import { getUnixTime } from 'date-fns';
 
 interface IUser extends IBaseEntity {
   name?: string;
@@ -30,4 +31,15 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', width: 256, nullable: true })
   photo?: string;
+
+  @BeforeInsert()
+  init(): void {
+    this.isActive = true;
+    this.createdAt = getUnixTime(new Date());
+  }
+
+  @BeforeUpdate()
+  update(): void {
+    this.updatedAt = getUnixTime(new Date());
+  }
 }

@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import getUnixTime from 'date-fns/getUnixTime';
 import { ObjectID } from 'mongodb';
 
 import { ICustomPagination } from '../../decorators/paging.decorator';
@@ -23,12 +22,7 @@ export class CategoryService {
         (parentCategory.path || ',') + `${parentCategory._id},`;
     }
 
-    return this.categoryRepository.save(
-      new Category({
-        ...categoryDto,
-        createdAt: getUnixTime(new Date())
-      })
-    );
+    return this.categoryRepository.save(new Category(categoryDto));
   }
 
   async getAllCategories(

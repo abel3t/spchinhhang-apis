@@ -1,6 +1,7 @@
-import { Column, Entity, ObjectID } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, ObjectID } from 'typeorm';
 
 import { BaseEntity, IBaseEntity } from './base.entity';
+import { getUnixTime } from 'date-fns';
 
 interface ICategory extends IBaseEntity {
   name?: string;
@@ -59,4 +60,15 @@ export class Category extends BaseEntity {
 
   @Column()
   photo: string;
+
+  @BeforeInsert()
+  init(): void {
+    this.isActive = true;
+    this.createdAt = getUnixTime(new Date());
+  }
+
+  @BeforeUpdate()
+  update(): void {
+    this.updatedAt = getUnixTime(new Date());
+  }
 }

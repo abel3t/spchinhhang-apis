@@ -1,6 +1,7 @@
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 
 import { BaseEntity, IBaseEntity } from './base.entity';
+import { getUnixTime } from 'date-fns';
 
 interface IProduct extends IBaseEntity {
   name?: string;
@@ -86,6 +87,13 @@ export class Product extends BaseEntity {
   @BeforeInsert()
   init(): void {
     this.categories = [];
+    this.isActive = true;
+    this.createdAt = getUnixTime(new Date());
+  }
+
+  @BeforeUpdate()
+  update(): void {
+    this.updatedAt = getUnixTime(new Date());
   }
 }
 
