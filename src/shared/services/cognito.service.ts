@@ -16,9 +16,10 @@ export class CognitoService {
   private readonly userPool: CognitoUserPool;
 
   constructor(private configService: ConfigService) {
-    const AWS_ACCESS_KEY_ID =
-      this.configService.get<string>('AWS_ACCESS_KEY_ID');
-    const AWS_SECRET_KEY = this.configService.get<string>('AWS_SECRET_KEY');
+    const AWS_ACCESS_KEY_ID = this.configService.get<string>(
+      'AWS_MY_ACCESS_KEY_ID'
+    );
+    const AWS_SECRET_KEY = this.configService.get<string>('AWS_MY_SECRET_KEY');
     const AWS_COGNITO_REGION =
       this.configService.get<string>('AWS_COGNITO_REGION');
     const AWS_COGNITO_USER_POOL_ID = this.configService.get<string>(
