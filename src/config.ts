@@ -1,4 +1,9 @@
+import dotEnv from 'dotenv';
+
+dotEnv.config({ path: '.env' });
+
 const config = {
+  PORT: process.env.PORT || 8080,
   UP_STAGE: process.env.UP_STAGE,
   DB_URI: process.env.DB_URI,
   AWS_MY_ACCESS_KEY_ID: process.env.AWS_MY_ACCESS_KEY_ID,

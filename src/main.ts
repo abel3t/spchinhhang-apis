@@ -86,22 +86,17 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('swagger', app, document);
 
-  const port = 3000;
-  await app.listen(
-    config.PORT || port,
-    '0.0.0.0',
-    (err: Error, address: string) => {
-      if (!err) {
-        Logger.log(`\n\n\nServer started at ${address}\n\n`);
+  await app.listen(config.PORT, '0.0.0.0', (err: Error, address: string) => {
+    if (!err) {
+      Logger.log(`\n\n\nServer started at ${address}\n\n`);
 
-        return;
-      }
-
-      Logger.log(err);
+      return;
     }
-  );
 
-  console.info(`server running on port ${config.PORT || port}`);
+    Logger.log(err);
+  });
+
+  console.info(`server running on port ${config.PORT}`);
 
   return app;
 }
