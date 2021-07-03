@@ -1,6 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger';
 
+import { Role } from '../../constant';
+import { Roles } from '../../decorators/roles.decorator';
+import { AuthGuard } from '../../guards/auth.guard';
+import { RolesGuard } from '../../guards/roles.guard';
 import { AuthService } from './auth.service';
 import { UserSignInDto, UserSignUpDto } from './user.dto';
 
@@ -8,7 +17,12 @@ import { UserSignInDto, UserSignUpDto } from './user.dto';
 @ApiTags('Auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
   @Get('profile')
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(new AuthGuard('jwt'), RolesGuard)
+  @ApiOperation({ summary: 'Get user profile' })
+  @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'Get profile'

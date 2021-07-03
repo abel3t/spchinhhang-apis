@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import {
   AuthenticationDetails,
   CognitoRefreshToken,
@@ -17,7 +16,7 @@ export class CognitoService {
   logger = new Logger('CognitoService');
   private readonly userPool: CognitoUserPool;
 
-  constructor(private configService: ConfigService) {
+  constructor() {
     const {
       AWS_MY_ACCESS_KEY_ID,
       AWS_MY_SECRET_KEY,
@@ -81,9 +80,7 @@ export class CognitoService {
           };
 
           const confirmParams = {
-            UserPoolId: this.configService.get<string>(
-              'AWS_COGNITO_USER_POOL_ID'
-            ),
+            UserPoolId: config.AWS_COGNITO_USER_POOL_ID,
             Username: email
           };
 
@@ -187,9 +184,7 @@ export class CognitoService {
       new AWS.CognitoIdentityServiceProvider().adminUpdateUserAttributes(
         {
           UserAttributes: attributes,
-          UserPoolId: this.configService.get<string>(
-            'AWS_COGNITO_USER_POOL_ID'
-          ),
+          UserPoolId: config.AWS_COGNITO_USER_POOL_ID,
           Username: email
         },
         (error) => {
@@ -211,9 +206,7 @@ export class CognitoService {
     return new Promise((resolve, reject) => {
       new AWS.CognitoIdentityServiceProvider().adminDeleteUser(
         {
-          UserPoolId: this.configService.get<string>(
-            'AWS_COGNITO_USER_POOL_ID'
-          ),
+          UserPoolId: config.AWS_COGNITO_USER_POOL_ID,
           Username: email
         },
         (error) => {
