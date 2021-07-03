@@ -148,6 +148,7 @@ module.exports = {
     'id-match': 'error',
     'import/no-deprecated': 'warn',
     'import/no-internal-modules': 'off',
+    'import/no-unresolved': 'off',
     'import/order': 'off',
     'max-classes-per-file': ['error', 4],
     'max-len': [

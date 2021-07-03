@@ -1,21 +1,38 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "declaration": false,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
-    "allowSyntheticDefaultImports": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "target": "es6",
-    "sourceMap": true,
-    "allowJs": true,
-    "outDir": "./dist",
-    "baseUrl": "./src"
-  },
-  "include": ["src/**/*", ".eslintrc.js", "**/*.config.js"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "allowSyntheticDefaultImports": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "target": "es6",
+        "sourceMap": true,
+        "allowJs": true,
+        "outDir": "./dist",
+        "baseUrl": "./",
+        "incremental": true,
+        "paths": {
+            "common/*": ["src/common/*"],
+            "decorators/*": ["src/decorators/*"],
+            "exceptions/*": ["src/exceptions/*"],
+            "filters/*": ["src/filters/*"],
+            "guards/*": ["src/guards/*"],
+            "interfaces/*": ["src/interfaces/*"],
+            "modules/*": ["src/modules/*"],
+            "shared/*": ["src/shared/*"]
+        },
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts",
+        "**/*-spec.ts"
+    ]
 }
