@@ -1,7 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, ObjectID } from 'typeorm';
+import { getUnixTime } from 'date-fns';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 
 import { BaseEntity, IBaseEntity } from './base.entity';
-import { getUnixTime } from 'date-fns';
 
 interface ICategory extends IBaseEntity {
   name?: string;

@@ -1,7 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
-
-import { DEFAULT_MAX_LIMIT } from '../constant';
+import { DEFAULT_MAX_LIMIT } from 'common/constant';
 
 interface IPaginationParams {
   maxLimit?: number;

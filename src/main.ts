@@ -19,10 +19,10 @@ import fastifyCors from 'fastify-cors';
 import fastifyCsrf from 'fastify-csrf';
 import { fastifyHelmet } from 'fastify-helmet';
 import fmp from 'fastify-multipart';
+import { ErrorExceptionFilter } from 'filters/error.filter';
 
 import { AppModule } from './app.module';
-import { ErrorExceptionFilter } from './filters/error.filter';
-import { QueryFailedFilter } from './filters/query-failed.filter';
+import config from './config';
 
 export async function bootstrap(): Promise<NestFastifyApplication> {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -58,10 +58,7 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
 
   const reflector = app.get(Reflector);
 
-  app.useGlobalFilters(
-    new QueryFailedFilter(reflector),
-    new ErrorExceptionFilter()
-  );
+  app.useGlobalFilters(new ErrorExceptionFilter());
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
 
@@ -75,31 +72,26 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
     })
   );
 
-  const config = new DocumentBuilder()
+  const swaggerConfig = new DocumentBuilder()
     .setTitle('spchinhhang APIs')
     .setDescription('spchinhhang APIs')
     .setVersion('0.0.1')
     .addBearerAuth()
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('swagger', app, document);
 
-  const port = 3000;
-  await app.listen(
-    process.env.PORT || port,
-    '0.0.0.0',
-    (err: Error, address: string) => {
-      if (!err) {
-        Logger.log(`\n\n\nServer started at ${address}\n\n`);
+  await app.listen(config.PORT, '0.0.0.0', (err: Error, address: string) => {
+    if (!err) {
+      Logger.log(`\n\n\nServer started at ${address}\n\n`);
 
-        return;
-      }
-
-      Logger.log(err);
+      return;
     }
-  );
 
-  console.info(`server running on port ${process.env.PORT || port}`);
+    Logger.log(err);
+  });
+
+  console.info(`server running on port ${config.PORT}`);
 
   return app;
 }

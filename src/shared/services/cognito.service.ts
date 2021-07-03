@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import {
   AuthenticationDetails,
   CognitoRefreshToken,
@@ -10,24 +9,21 @@ import {
 import AWS from 'aws-sdk';
 import { AttributeType } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 
+import config from '../../config';
+
 @Injectable()
 export class CognitoService {
   logger = new Logger('CognitoService');
   private readonly userPool: CognitoUserPool;
 
-  constructor(private configService: ConfigService) {
-    const AWS_ACCESS_KEY_ID = this.configService.get<string>(
-      'AWS_MY_ACCESS_KEY_ID'
-    );
-    const AWS_SECRET_KEY = this.configService.get<string>('AWS_MY_SECRET_KEY');
-    const AWS_COGNITO_REGION =
-      this.configService.get<string>('AWS_COGNITO_REGION');
-    const AWS_COGNITO_USER_POOL_ID = this.configService.get<string>(
-      'AWS_COGNITO_USER_POOL_ID'
-    );
-    const AWS_COGNITO_APP_CLIENT_ID = this.configService.get<string>(
-      'AWS_COGNITO_APP_CLIENT_ID'
-    );
+  constructor() {
+    const {
+      AWS_MY_ACCESS_KEY_ID,
+      AWS_MY_SECRET_KEY,
+      AWS_COGNITO_REGION,
+      AWS_COGNITO_USER_POOL_ID,
+      AWS_COGNITO_APP_CLIENT_ID
+    } = config;
 
     this.userPool = new CognitoUserPool({
       UserPoolId: AWS_COGNITO_USER_POOL_ID,
@@ -35,8 +31,8 @@ export class CognitoService {
     });
 
     AWS.config.update({
-      accessKeyId: AWS_ACCESS_KEY_ID,
-      secretAccessKey: AWS_SECRET_KEY,
+      accessKeyId: AWS_MY_ACCESS_KEY_ID,
+      secretAccessKey: AWS_MY_SECRET_KEY,
       region: AWS_COGNITO_REGION
     });
   }
@@ -84,9 +80,7 @@ export class CognitoService {
           };
 
           const confirmParams = {
-            UserPoolId: this.configService.get<string>(
-              'AWS_COGNITO_USER_POOL_ID'
-            ),
+            UserPoolId: config.AWS_COGNITO_USER_POOL_ID,
             Username: email
           };
 
@@ -190,9 +184,7 @@ export class CognitoService {
       new AWS.CognitoIdentityServiceProvider().adminUpdateUserAttributes(
         {
           UserAttributes: attributes,
-          UserPoolId: this.configService.get<string>(
-            'AWS_COGNITO_USER_POOL_ID'
-          ),
+          UserPoolId: config.AWS_COGNITO_USER_POOL_ID,
           Username: email
         },
         (error) => {
@@ -214,9 +206,7 @@ export class CognitoService {
     return new Promise((resolve, reject) => {
       new AWS.CognitoIdentityServiceProvider().adminDeleteUser(
         {
-          UserPoolId: this.configService.get<string>(
-            'AWS_COGNITO_USER_POOL_ID'
-          ),
+          UserPoolId: config.AWS_COGNITO_USER_POOL_ID,
           Username: email
         },
         (error) => {

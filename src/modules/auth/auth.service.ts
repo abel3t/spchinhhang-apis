@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { Role } from 'common/constant';
 import { ObjectID } from 'mongodb';
+import { User } from 'shared/entities/user.entity';
+import { UserRepository } from 'shared/repositories/user.repository';
+import { CognitoService } from 'shared/services/cognito.service';
 
-import { Role } from '../../constant';
-import { UserRepository } from '../../shared/repositories/user.repository';
-import { CognitoService } from '../../shared/services/cognito.service';
 import { UserSignInDto, UserSignUpDto } from './user.dto';
-import { User } from '../../shared/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +28,7 @@ export class AuthService {
       role
     });
 
-    await this.userRepository.save(
+    const user = await this.userRepository.save(
       new User({
         name,
         email,
@@ -36,6 +36,14 @@ export class AuthService {
         role: Role.ADMIN
       })
     );
+
+    await this.cognitoService.updateUserCognitoAttributes(email, [
+      {
+        Name: 'custom:id',
+        Value: `${user._id}`
+      }
+    ]);
+
     return true;
   }
 

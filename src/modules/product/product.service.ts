@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { ICustomPagination } from 'decorators/paging.decorator';
 import { ObjectID } from 'mongodb';
+import { Product } from 'shared/entities/product.entity';
+import { ProductRepository } from 'shared/repositories/product.repesitory';
 
-import { ICustomPagination } from '../../decorators/paging.decorator';
-import { Product } from '../../shared/entities/product.entity';
-import { ProductRepository } from '../../shared/repositories/product.repesitory';
 import { AddProductCategoryDto, CreateProductDto } from './product.dto';
 
 @Injectable()

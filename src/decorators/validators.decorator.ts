@@ -1,10 +1,10 @@
-import type { ValidationArguments, ValidationOptions } from 'class-validator';
+import type { ValidationOptions } from 'class-validator';
 import { registerDecorator } from 'class-validator';
 
 export function IsPassword(
   validationOptions?: ValidationOptions
 ): PropertyDecorator {
-  return (object: any, propertyName: string) => {
+  return (object: unknown, propertyName: string) => {
     registerDecorator({
       propertyName,
       name: 'isPassword',
@@ -12,7 +12,7 @@ export function IsPassword(
       constraints: [],
       options: validationOptions,
       validator: {
-        validate(value: string, _args: ValidationArguments) {
+        validate(value: string) {
           return /^[\d!#$%&*@A-Z^a-z]*$/.test(value);
         }
       }

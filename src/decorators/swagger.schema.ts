@@ -8,11 +8,10 @@ import { RouteParamtypes } from '@nestjs/common/enums/route-paramtypes.enum';
 import { ApiBody, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
 import type { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { reverseObjectKeys } from '@nestjs/swagger/dist/utils/reverse-object-keys.util';
+import type { IApiFile } from 'interfaces/IApiFile';
 import { mapValues } from 'lodash';
 
-import type { IApiFile } from '../interfaces/IApiFile';
-
-function explore(instance: any, propertyKey: string) {
+function explore(instance: unknown, propertyKey: string) {
   const types: Array<Type<unknown>> = Reflect.getMetadata(
     PARAMTYPES_METADATA,
     instance,
@@ -106,4 +105,5 @@ const ApiFileDecorator =
 export const ApiFile = (
   files: IApiFile[] = [],
   options: Partial<{ isRequired: boolean }> = {}
-) => applyDecorators(RegisterModels(), ApiFileDecorator(files, options));
+): unknown =>
+  applyDecorators(RegisterModels(), ApiFileDecorator(files, options));
