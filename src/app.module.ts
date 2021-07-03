@@ -10,6 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
 import { SharedModule } from './shared/shared.module';
+import { JwtStrategy } from './modules/auth/jwt.strategy';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { SharedModule } from './shared/shared.module';
       limit: 10
     })
   ],
-  controllers: [AppControler]
+  controllers: [AppControler],
+  providers: [JwtStrategy]
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {

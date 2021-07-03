@@ -28,7 +28,7 @@ export class AuthService {
       role
     });
 
-    await this.userRepository.save(
+    const user = await this.userRepository.save(
       new User({
         name,
         email,
@@ -36,6 +36,14 @@ export class AuthService {
         role: Role.ADMIN
       })
     );
+
+    await this.cognitoService.updateUserCognitoAttributes(email, [
+      {
+        Name: 'custom:id',
+        Value: `${user._id}`
+      }
+    ]);
+
     return true;
   }
 

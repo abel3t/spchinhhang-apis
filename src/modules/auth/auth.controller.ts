@@ -8,8 +8,10 @@ import {
 
 import { Role } from '../../constant';
 import { Roles } from '../../decorators/roles.decorator';
+import { CurrentUser } from '../../decorators/user.decorator';
 import { AuthGuard } from '../../guards/auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
+import { ICurrentUser } from '../../interfaces/ICurrentUser';
 import { AuthService } from './auth.service';
 import { UserSignInDto, UserSignUpDto } from './user.dto';
 
@@ -27,9 +29,8 @@ export class AuthController {
     status: 200,
     description: 'Get profile'
   })
-  getProfile(): Promise<unknown> {
-    const id = 'string';
-    return this.authService.getProfile(id);
+  getProfile(@CurrentUser() user: ICurrentUser): Promise<unknown> {
+    return this.authService.getProfile(user.id);
   }
 
   // region Admin
