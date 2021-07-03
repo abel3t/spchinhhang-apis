@@ -5,13 +5,13 @@ import {
   ApiResponse,
   ApiTags
 } from '@nestjs/swagger';
+import { Roles } from 'decorators/roles.decorator';
+import { CurrentUser } from 'decorators/user.decorator';
+import { AuthGuard } from 'guards/auth.guard';
+import { RolesGuard } from 'guards/roles.guard';
+import { ICurrentUser } from 'interfaces/ICurrentUser';
 
-import { Role } from '../../constant';
-import { Roles } from '../../decorators/roles.decorator';
-import { CurrentUser } from '../../decorators/user.decorator';
-import { AuthGuard } from '../../guards/auth.guard';
-import { RolesGuard } from '../../guards/roles.guard';
-import { ICurrentUser } from '../../interfaces/ICurrentUser';
+import { Role } from 'common/constant';
 import { AuthService } from './auth.service';
 import { UserSignInDto, UserSignUpDto } from './user.dto';
 

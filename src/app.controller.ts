@@ -3,7 +3,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller()
 @ApiTags('Root')
-export class AppControler {
+export class AppController {
   constructor() {}
   @Get()
   @ApiResponse({

@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ICustomPagination } from 'decorators/paging.decorator';
 import { ObjectID } from 'mongodb';
+import { Category } from 'shared/entities/category.entity';
+import { CategoryRepository } from 'shared/repositories/category.repository';
 
-import { ICustomPagination } from '../../decorators/paging.decorator';
-import { Category } from '../../shared/entities/category.entity';
-import { CategoryRepository } from '../../shared/repositories/category.repository';
 import { CreateCategoryDto } from './category.dto';
 
 @Injectable()

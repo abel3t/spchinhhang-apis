@@ -1,7 +1,6 @@
+import { ICustomPagination } from 'decorators/paging.decorator';
 import { paginate, Pagination } from 'nestjs-typeorm-paginate';
 import { FindConditions, FindManyOptions, MongoRepository } from 'typeorm';
-
-import { ICustomPagination } from '../../decorators/paging.decorator';
 
 export class BaseRepository<T> extends MongoRepository<T> {
   paginate(

@@ -1,16 +1,12 @@
-import './boilerplate.polyfill';
-
-import type { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { AuthModule } from 'modules/auth/auth.module';
+import { JwtStrategy } from 'modules/auth/jwt.strategy';
+import { CategoryModule } from 'modules/category/category.module';
+import { ProductModule } from 'modules/product/product.module';
+import { SharedModule } from 'shared/shared.module';
 
-import { AppControler } from './app.controler';
-import { contextMiddleware } from './middlewares';
-import { AuthModule } from './modules/auth/auth.module';
-import { CategoryModule } from './modules/category/category.module';
-import { ProductModule } from './modules/product/product.module';
-import { SharedModule } from './shared/shared.module';
-import { JwtStrategy } from './modules/auth/jwt.strategy';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -23,11 +19,7 @@ import { JwtStrategy } from './modules/auth/jwt.strategy';
       limit: 10
     })
   ],
-  controllers: [AppControler],
+  controllers: [AppController],
   providers: [JwtStrategy]
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
-    consumer.apply(contextMiddleware).forRoutes('*');
-  }
-}
+export class AppModule {}

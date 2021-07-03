@@ -1,8 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Role } from 'common/constant';
+import { ICurrentUser } from 'interfaces/ICurrentUser';
 import { Observable } from 'rxjs';
 
-import { Role } from '../constant';
-import { ICurrentUser } from '../interfaces/ICurrentUser';
 @Injectable()
 export class PermissionGuard implements CanActivate {
   constructor() {}

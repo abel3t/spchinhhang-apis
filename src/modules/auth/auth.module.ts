@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
+import { CognitoService } from 'shared/services/cognito.service';
 
-import { CognitoService } from '../../shared/services/cognito.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 

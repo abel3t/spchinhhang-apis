@@ -19,11 +19,9 @@ import fastifyCors from 'fastify-cors';
 import fastifyCsrf from 'fastify-csrf';
 import { fastifyHelmet } from 'fastify-helmet';
 import fmp from 'fastify-multipart';
+import { ErrorExceptionFilter } from 'filters/error.filter';
 
 import { AppModule } from './app.module';
-import { ErrorExceptionFilter } from './filters/error.filter';
-import { QueryFailedFilter } from './filters/query-failed.filter';
-
 import config from './config';
 
 export async function bootstrap(): Promise<NestFastifyApplication> {
@@ -60,10 +58,7 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
 
   const reflector = app.get(Reflector);
 
-  app.useGlobalFilters(
-    new QueryFailedFilter(reflector),
-    new ErrorExceptionFilter()
-  );
+  app.useGlobalFilters(new ErrorExceptionFilter());
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
 

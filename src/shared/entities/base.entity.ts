@@ -1,11 +1,4 @@
-import { getUnixTime } from 'date-fns';
-import {
-  BeforeInsert,
-  BeforeUpdate,
-  Column,
-  ObjectID,
-  ObjectIdColumn
-} from 'typeorm';
+import { Column, ObjectID, ObjectIdColumn } from 'typeorm';
 
 export interface IBaseEntity {
   id?: number;

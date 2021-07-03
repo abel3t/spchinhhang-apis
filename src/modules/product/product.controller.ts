@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-
-import { DEFAULT_MAX_LIMIT } from '../../constant';
+import { DEFAULT_MAX_LIMIT } from 'common/constant';
 import {
   ICustomPagination,
   PaginationParams
-} from '../../decorators/paging.decorator';
+} from 'decorators/paging.decorator';
+
 import { AddProductCategoryDto, CreateProductDto } from './product.dto';
 import { ProductService } from './product.service';
 
