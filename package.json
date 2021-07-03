@@ -5,8 +5,7 @@
     "author": "Abel Tran <abeltran.develop@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "build": "tsc -p tsconfig.build.json",
-        "build:dev": "nest build",
+        "build": "nest build",
         "start": "node dist/main",
         "postbuild:prod": "copyfiles --up 1 src/**/*.json dist",
         "start:hmr": "node dist/main.hmr.ts",
