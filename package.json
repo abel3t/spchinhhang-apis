@@ -16,8 +16,6 @@
         "migration:create": "yarn run typeorm migration:create -d src/migrations -n",
         "migration:revert": "yarn run typeorm migration:revert",
         "schema:drop": "yarn run typeorm schema:drop",
-        "watch:dev": "nodemon --config nodemon.json",
-        "debug:dev": "nodemon --config nodemon-debug.json",
         "lint": "eslint . --ext .js,.ts",
         "lint:fix": "eslint --fix . --ext .ts",
         "test": "jest",
