@@ -24,6 +24,8 @@ import { AppModule } from './app.module';
 import { ErrorExceptionFilter } from './filters/error.filter';
 import { QueryFailedFilter } from './filters/query-failed.filter';
 
+import config from './config';
+
 export async function bootstrap(): Promise<NestFastifyApplication> {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
@@ -75,18 +77,18 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
     })
   );
 
-  const config = new DocumentBuilder()
+  const swaggerConfig = new DocumentBuilder()
     .setTitle('spchinhhang APIs')
     .setDescription('spchinhhang APIs')
     .setVersion('0.0.1')
     .addBearerAuth()
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('swagger', app, document);
 
   const port = 3000;
   await app.listen(
-    process.env.PORT || port,
+    config.PORT || port,
     '0.0.0.0',
     (err: Error, address: string) => {
       if (!err) {
@@ -99,7 +101,7 @@ export async function bootstrap(): Promise<NestFastifyApplication> {
     }
   );
 
-  console.info(`server running on port ${process.env.PORT || port}`);
+  console.info(`server running on port ${config.PORT || port}`);
 
   return app;
 }

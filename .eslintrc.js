@@ -146,7 +146,6 @@ module.exports = {
     eqeqeq: ['error', 'smart'],
     'guard-for-in': 'error',
     'id-match': 'error',
-    'import/no-default-export': 'error',
     'import/no-deprecated': 'warn',
     'import/no-internal-modules': 'off',
     'import/order': 'off',

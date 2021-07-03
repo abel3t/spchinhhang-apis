@@ -10,24 +10,21 @@ import {
 import AWS from 'aws-sdk';
 import { AttributeType } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 
+import config from '../../config';
+
 @Injectable()
 export class CognitoService {
   logger = new Logger('CognitoService');
   private readonly userPool: CognitoUserPool;
 
   constructor(private configService: ConfigService) {
-    const AWS_ACCESS_KEY_ID = this.configService.get<string>(
-      'AWS_MY_ACCESS_KEY_ID'
-    );
-    const AWS_SECRET_KEY = this.configService.get<string>('AWS_MY_SECRET_KEY');
-    const AWS_COGNITO_REGION =
-      this.configService.get<string>('AWS_COGNITO_REGION');
-    const AWS_COGNITO_USER_POOL_ID = this.configService.get<string>(
-      'AWS_COGNITO_USER_POOL_ID'
-    );
-    const AWS_COGNITO_APP_CLIENT_ID = this.configService.get<string>(
-      'AWS_COGNITO_APP_CLIENT_ID'
-    );
+    const {
+      AWS_MY_ACCESS_KEY_ID,
+      AWS_MY_SECRET_KEY,
+      AWS_COGNITO_REGION,
+      AWS_COGNITO_USER_POOL_ID,
+      AWS_COGNITO_APP_CLIENT_ID
+    } = config;
 
     this.userPool = new CognitoUserPool({
       UserPoolId: AWS_COGNITO_USER_POOL_ID,
@@ -35,8 +32,8 @@ export class CognitoService {
     });
 
     AWS.config.update({
-      accessKeyId: AWS_ACCESS_KEY_ID,
-      secretAccessKey: AWS_SECRET_KEY,
+      accessKeyId: AWS_MY_ACCESS_KEY_ID,
+      secretAccessKey: AWS_MY_SECRET_KEY,
       region: AWS_COGNITO_REGION
     });
   }
