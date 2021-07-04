@@ -1,23 +1,18 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { DEFAULT_MAX_LIMIT, Role } from 'common/constant';
 import {
   ICustomPagination,
   PaginationParams
 } from 'decorators/paging.decorator';
+import { Roles } from 'decorators/roles.decorator';
+import { CurrentUser } from 'decorators/user.decorator';
+import { AuthGuard } from 'guards/auth.guard';
+import { RolesGuard } from 'guards/roles.guard';
+import { ICurrentUser } from 'interfaces/ICurrentUser';
 
 import { CreateCategoryDto } from './category.dto';
 import { CategoryService } from './category.service';
-import { Roles } from 'decorators/roles.decorator';
-import { AuthGuard } from 'guards/auth.guard';
-import { RolesGuard } from 'guards/roles.guard';
-import { CurrentUser } from 'decorators/user.decorator';
-import { ICurrentUser } from 'interfaces/ICurrentUser';
 
 @Controller('categories')
 @ApiTags('Categories')
