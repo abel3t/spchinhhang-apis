@@ -8,6 +8,7 @@ import {
   CreateProductDto,
   UpdateProductDto
 } from './product.dto';
+import { unixTime } from 'common/utils';
 
 @Injectable()
 export class ProductService {
@@ -18,10 +19,9 @@ export class ProductService {
     userId: string,
     productDto: CreateProductDto
   ): Promise<unknown> {
-    await this.productRepository.save({
-      createdBy: userId,
-      ...new Product(productDto)
-    });
+    await this.productRepository.save(
+      new Product({ ...productDto, createdBy: userId })
+    );
     return true;
   }
 
@@ -33,16 +33,19 @@ export class ProductService {
     await this.productRepository.findOneAndUpdate(
       { _id: productId, isActive: true },
       {
-        updatedBy: userId,
-        ...productDto
+        $set: {
+          updatedBy: userId,
+          updatedAt: unixTime(),
+          ...productDto
+        }
       }
     );
     return true;
   }
-  async addProductCategory({
-    productId,
-    categoryId
-  }: AddProductCategoryDto): Promise<unknown> {
+  async addProductCategory(
+    userId: string,
+    { productId, categoryId }: AddProductCategoryDto
+  ): Promise<unknown> {
     return await this.productRepository.findOneAndUpdate(
       {
         _id: productId
@@ -53,16 +56,20 @@ export class ProductService {
             categoryId,
             isFeatured: false
           }
+        },
+        $set: {
+          UpdatedBy: userId,
+          updatedAt: unixTime()
         }
       }
     );
   }
 
-  async removeProductCategory({
-    productId,
-    categoryId
-  }: AddProductCategoryDto): Promise<unknown> {
-    return await this.productRepository.findOneAndUpdate(
+  async removeProductCategory(
+    userId: string,
+    { productId, categoryId }: AddProductCategoryDto
+  ): Promise<unknown> {
+    await this.productRepository.findOneAndUpdate(
       {
         _id: productId
       },
@@ -71,9 +78,14 @@ export class ProductService {
           categories: {
             categoryId
           }
+        },
+        $set: {
+          updatedBy: userId,
+          updatedAt: unixTime()
         }
       }
     );
+    return true;
   }
 
   // endregion

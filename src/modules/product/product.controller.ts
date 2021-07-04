@@ -5,14 +5,20 @@ import {
   Get,
   Param,
   Post,
-  Put
+  Put,
+  UseGuards
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { DEFAULT_MAX_LIMIT } from 'common/constant';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { DEFAULT_MAX_LIMIT, Role } from 'common/constant';
 import {
   ICustomPagination,
   PaginationParams
 } from 'decorators/paging.decorator';
+import { Roles } from 'decorators/roles.decorator';
+import { CurrentUser } from 'decorators/user.decorator';
+import { AuthGuard } from 'guards/auth.guard';
+import { RolesGuard } from 'guards/roles.guard';
+import { ICurrentUser } from 'interfaces/ICurrentUser';
 
 import {
   AddProductCategoryDto,
@@ -20,8 +26,6 @@ import {
   UpdateProductDto
 } from './product.dto';
 import { ProductService } from './product.service';
-import { CurrentUser } from 'decorators/user.decorator';
-import { ICurrentUser } from 'interfaces/ICurrentUser';
 
 @Controller('products')
 @ApiTags('Products')
@@ -30,6 +34,9 @@ export class ProductController {
 
   // region Admin APIs
   @Post()
+  @Roles(Role.ADMIN)
+  @UseGuards(new AuthGuard('jwt'), RolesGuard)
+  @ApiBearerAuth()
   @ApiResponse({
     status: 201,
     description: 'Create a new product'
@@ -42,6 +49,9 @@ export class ProductController {
   }
 
   @Put(':productId')
+  @Roles(Role.ADMIN)
+  @UseGuards(new AuthGuard('jwt'), RolesGuard)
+  @ApiBearerAuth()
   @ApiResponse({
     status: 201,
     description: 'Update a product'
@@ -59,17 +69,28 @@ export class ProductController {
   }
 
   @Put(':productId/categories/:categoryId')
+  @Roles(Role.ADMIN)
+  @UseGuards(new AuthGuard('jwt'), RolesGuard)
+  @ApiBearerAuth()
   addProductCategory(
+    @CurrentUser() user: ICurrentUser,
     @Param() productCategoryDto: AddProductCategoryDto
   ): Promise<unknown> {
-    return this.productService.addProductCategory(productCategoryDto);
+    return this.productService.addProductCategory(user.id, productCategoryDto);
   }
 
   @Delete(':productId/categories/:categoryId')
+  @Roles(Role.ADMIN)
+  @UseGuards(new AuthGuard('jwt'), RolesGuard)
+  @ApiBearerAuth()
   removeProductCategory(
+    @CurrentUser() user: ICurrentUser,
     @Param() productCategoryDto: AddProductCategoryDto
   ): Promise<unknown> {
-    return this.productService.addProductCategory(productCategoryDto);
+    return this.productService.removeProductCategory(
+      user.id,
+      productCategoryDto
+    );
   }
   // endregion
 

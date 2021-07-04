@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { unixTime } from 'common/utils';
 import { ICustomPagination } from 'decorators/paging.decorator';
+import { ObjectID } from 'mongodb';
 import { Category } from 'shared/entities/category.entity';
 import { CategoryRepository } from 'shared/repositories/category.repository';
 
@@ -25,10 +27,11 @@ export class CategoryService {
         (parentCategory.path || ',') + `${parentCategory._id},`;
     }
 
-    return this.categoryRepository.save({
-      ...new Category(categoryDto),
-      createdBy: userId
-    });
+    await this.categoryRepository.save(
+      new Category({ ...categoryDto, createdBy: userId })
+    );
+
+    return true;
   }
 
   async updateCategory({
@@ -47,17 +50,21 @@ export class CategoryService {
         (parentCategory.path || ',') + `${parentCategory._id},`;
     }
 
-    return this.categoryRepository.findOneAndUpdate(
-      { _id: categoryId, isActive: true },
-      { updatedBy: userId, ...categoryDto }
+    await this.categoryRepository.update(
+      { _id: ObjectID(categoryId), isActive: true },
+      {
+        updatedBy: userId,
+        updatedAt: unixTime(),
+        ...categoryDto
+      }
     );
+
+    return true;
   }
 
   // endregion
 
-  async getAllCategories(
-    paginationOptions: ICustomPagination
-  ): Promise<unknown> {
+  getAllCategories(paginationOptions: ICustomPagination): Promise<unknown> {
     return this.categoryRepository.paginate(paginationOptions);
   }
 }
