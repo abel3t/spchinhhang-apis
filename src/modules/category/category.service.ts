@@ -4,7 +4,7 @@ import { ObjectID } from 'mongodb';
 import { Category } from 'shared/entities/category.entity';
 import { CategoryRepository } from 'shared/repositories/category.repository';
 
-import { CreateCategoryDto } from './category.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from './category.dto';
 
 @Injectable()
 export class CategoryService {
@@ -32,10 +32,39 @@ export class CategoryService {
     });
   }
 
+  async updateCategory({
+    userId,
+    categoryId,
+    categoryDto
+  }: IUpdateCategory): Promise<unknown> {
+    if (categoryDto.parentId) {
+      const parentCategory = await this.categoryRepository.findOne({
+        _id: ObjectID(categoryDto.parentId)
+      });
+      if (!parentCategory) {
+        throw new BadRequestException('Invalid parentId');
+      }
+      categoryDto.path =
+        (parentCategory.path || ',') + `${parentCategory._id},`;
+    }
+
+    return this.categoryRepository.findOneAndUpdate(
+      { _id: categoryId, isActive: true },
+      { updatedBy: userId, ...categoryDto }
+    );
+  }
+
+  // endregion
+
   async getAllCategories(
     paginationOptions: ICustomPagination
   ): Promise<unknown> {
     return this.categoryRepository.paginate(paginationOptions);
   }
-  // endregion
+}
+
+interface IUpdateCategory {
+  userId: string;
+  categoryId: string;
+  categoryDto: UpdateCategoryDto;
 }
