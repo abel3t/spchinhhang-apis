@@ -1,3 +1,5 @@
+import { Transform, TransformFnParams } from 'class-transformer';
+import { ObjectID } from 'mongodb';
 import { Column, ObjectIdColumn } from 'typeorm';
 
 export interface IBaseEntity {
@@ -14,6 +16,9 @@ export class BaseEntity {
   }
 
   @ObjectIdColumn()
+  @Transform(({ value }: TransformFnParams) => ObjectID(value).toHexString(), {
+    toPlainOnly: true
+  })
   _id: string;
 
   @Column({ nullable: true })
