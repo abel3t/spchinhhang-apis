@@ -1,15 +1,19 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { unixTime } from 'common/utils';
+import { toObjectId, unixTime } from 'common/utils';
 import { ICustomPagination } from 'decorators/paging.decorator';
 import { ObjectID } from 'mongodb';
 import { Category } from 'shared/entities/category.entity';
 import { CategoryRepository } from 'shared/repositories/category.repository';
 
 import { CreateCategoryDto, UpdateCategoryDto } from './category.dto';
+import { ProductRepository } from 'shared/repositories/product.repesitory';
 
 @Injectable()
 export class CategoryService {
-  constructor(private categoryRepository: CategoryRepository) {}
+  constructor(
+    private categoryRepository: CategoryRepository,
+    private productRepository: ProductRepository
+  ) {}
 
   // region Admin APIs
   async createNewCategory(
@@ -58,6 +62,28 @@ export class CategoryService {
         ...categoryDto
       }
     );
+
+    return true;
+  }
+
+  async deleteCategory(userId: string, categoryId: string): Promise<boolean> {
+    await this.productRepository.updateMany(
+      {
+        'categories.categoryId': categoryId
+      },
+      {
+        $pull: {
+          categories: {
+            categoryId
+          }
+        },
+        $set: {
+          updatedBy: userId,
+          updatedAt: unixTime()
+        }
+      }
+    );
+    await this.categoryRepository.delete({ _id: toObjectId(categoryId) });
 
     return true;
   }

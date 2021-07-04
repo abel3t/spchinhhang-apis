@@ -5,6 +5,7 @@ import { UserRepository } from 'shared/repositories/user.repository';
 import { CognitoService } from 'shared/services/cognito.service';
 
 import { UserSignInDto, UserSignUpDto } from './user.dto';
+import { toObjectId } from 'common/utils';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
 
   // region User APIs
   getProfile(id: string): Promise<unknown> {
-    return this.userRepository.findOne({ _id: id });
+    return this.userRepository.findOne({ _id: toObjectId(id) });
   }
   // endregion
 

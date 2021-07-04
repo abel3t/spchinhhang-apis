@@ -68,6 +68,18 @@ export class ProductController {
     });
   }
 
+  @Delete(':productId')
+  @Roles(Role.ADMIN)
+  @UseGuards(new AuthGuard('jwt'), RolesGuard)
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 201,
+    description: 'Delete a product'
+  })
+  deleteProduct(@Param('productId') productId: string): Promise<unknown> {
+    return this.productService.deleteProduct(productId);
+  }
+
   @Put(':productId/categories/:categoryId')
   @Roles(Role.ADMIN)
   @UseGuards(new AuthGuard('jwt'), RolesGuard)

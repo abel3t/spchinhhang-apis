@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -61,6 +62,21 @@ export class CategoryController {
       categoryId,
       categoryDto
     });
+  }
+
+  @Delete(':categoryId')
+  @Roles(Role.ADMIN)
+  @UseGuards(new AuthGuard('jwt'), RolesGuard)
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 201,
+    description: 'Delete a category'
+  })
+  deleteCategory(
+    @CurrentUser() currentUser: ICurrentUser,
+    @Param('categoryId') categoryId: string
+  ): Promise<unknown> {
+    return this.categoryService.deleteCategory(currentUser.id, categoryId);
   }
   // endregion
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { toObjectId, unixTime } from 'common/utils';
 import { ICustomPagination } from 'decorators/paging.decorator';
 import { Product } from 'shared/entities/product.entity';
 import { ProductRepository } from 'shared/repositories/product.repesitory';
@@ -8,7 +9,6 @@ import {
   CreateProductDto,
   UpdateProductDto
 } from './product.dto';
-import { unixTime } from 'common/utils';
 
 @Injectable()
 export class ProductService {
@@ -31,7 +31,7 @@ export class ProductService {
     productDto
   }: IUpdateProduct): Promise<unknown> {
     await this.productRepository.findOneAndUpdate(
-      { _id: productId, isActive: true },
+      { _id: toObjectId(productId), isActive: true },
       {
         $set: {
           updatedBy: userId,
@@ -42,13 +42,19 @@ export class ProductService {
     );
     return true;
   }
+
+  async deleteProduct(productId: string): Promise<boolean> {
+    await this.productRepository.deleteOne({ _id: toObjectId(productId) });
+    return true;
+  }
+
   async addProductCategory(
     userId: string,
     { productId, categoryId }: AddProductCategoryDto
   ): Promise<unknown> {
-    return await this.productRepository.findOneAndUpdate(
+    await this.productRepository.findOneAndUpdate(
       {
-        _id: productId
+        _id: toObjectId(productId)
       },
       {
         $push: {
@@ -63,6 +69,8 @@ export class ProductService {
         }
       }
     );
+
+    return true;
   }
 
   async removeProductCategory(
@@ -71,7 +79,7 @@ export class ProductService {
   ): Promise<unknown> {
     await this.productRepository.findOneAndUpdate(
       {
-        _id: productId
+        _id: toObjectId(productId)
       },
       {
         $pull: {
