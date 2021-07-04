@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateCategoryDto = void 0;
+exports.UpdateCategoryDto = exports.CreateCategoryDto = void 0;
 const openapi = require("@nestjs/swagger");
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
@@ -73,4 +73,64 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "path", void 0);
 exports.CreateCategoryDto = CreateCategoryDto;
+class UpdateCategoryDto {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { name: { required: true, type: () => String }, type: { required: true, type: () => String }, description: { required: true, type: () => String }, parentId: { required: true, type: () => String }, photo: { required: true, type: () => String }, path: { required: true, type: () => String } };
+    }
+}
+__decorate([
+    swagger_1.ApiProperty({
+        example: 'Laptop HP',
+        description: 'The name of category'
+    }),
+    class_validator_1.IsString(),
+    class_validator_1.IsOptional(),
+    __metadata("design:type", String)
+], UpdateCategoryDto.prototype, "name", void 0);
+__decorate([
+    swagger_1.ApiProperty({
+        example: 'Laptop',
+        description: 'The type of category'
+    }),
+    class_validator_1.IsString(),
+    class_validator_1.IsOptional(),
+    __metadata("design:type", String)
+], UpdateCategoryDto.prototype, "type", void 0);
+__decorate([
+    swagger_1.ApiProperty({
+        example: 'Laptop HP like new',
+        description: 'Description'
+    }),
+    class_validator_1.IsString(),
+    class_validator_1.IsOptional(),
+    __metadata("design:type", String)
+], UpdateCategoryDto.prototype, "description", void 0);
+__decorate([
+    swagger_1.ApiProperty({
+        example: '60bdbbf92339455d3d5f84d7',
+        description: 'The parentId of category'
+    }),
+    class_validator_1.IsString(),
+    class_validator_1.IsOptional(),
+    __metadata("design:type", String)
+], UpdateCategoryDto.prototype, "parentId", void 0);
+__decorate([
+    swagger_1.ApiProperty({
+        example: 'https://salt.tikicdn.com/cache/w64/ts/product/10/b0/91/6329969c3fce448f92114968db420fa7.jpg',
+        description: 'The photo of category'
+    }),
+    class_validator_1.IsString(),
+    class_validator_1.IsOptional(),
+    __metadata("design:type", String)
+], UpdateCategoryDto.prototype, "photo", void 0);
+__decorate([
+    swagger_1.ApiProperty({
+        example: ',60bdbbf92339455d3d5f84d7,',
+        description: 'The path of category'
+    }),
+    class_validator_1.IsString(),
+    class_validator_1.IsOptional(),
+    __metadata("design:type", String)
+], UpdateCategoryDto.prototype, "path", void 0);
+exports.UpdateCategoryDto = UpdateCategoryDto;
 //# sourceMappingURL=category.dto.js.map

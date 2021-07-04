@@ -11,22 +11,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseEntity = void 0;
 const openapi = require("@nestjs/swagger");
+const class_transformer_1 = require("class-transformer");
+const mongodb_1 = require("mongodb");
 const typeorm_1 = require("typeorm");
 class BaseEntity {
     constructor(props) {
         Object.assign(this, props || {});
     }
     static _OPENAPI_METADATA_FACTORY() {
-        return { _id: { required: true, type: () => require("typeorm/driver/mongodb/typings").ObjectID }, createdBy: { required: false, type: () => Number }, createdAt: { required: false, type: () => Number }, updatedBy: { required: false, type: () => Number }, updatedAt: { required: false, type: () => Number }, isActive: { required: false, type: () => Boolean } };
+        return { _id: { required: true, type: () => String }, createdBy: { required: false, type: () => String }, createdAt: { required: false, type: () => Number }, updatedBy: { required: false, type: () => String }, updatedAt: { required: false, type: () => Number }, isActive: { required: false, type: () => Boolean } };
     }
 }
 __decorate([
     typeorm_1.ObjectIdColumn(),
-    __metadata("design:type", typeorm_1.ObjectID)
+    class_transformer_1.Transform(({ value }) => mongodb_1.ObjectID(value).toHexString(), {
+        toPlainOnly: true
+    }),
+    __metadata("design:type", String)
 ], BaseEntity.prototype, "_id", void 0);
 __decorate([
     typeorm_1.Column({ nullable: true }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], BaseEntity.prototype, "createdBy", void 0);
 __decorate([
     typeorm_1.Column({ nullable: true }),
@@ -34,7 +39,7 @@ __decorate([
 ], BaseEntity.prototype, "createdAt", void 0);
 __decorate([
     typeorm_1.Column({ nullable: true }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], BaseEntity.prototype, "updatedBy", void 0);
 __decorate([
     typeorm_1.Column({ nullable: true }),

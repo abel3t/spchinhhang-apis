@@ -18,19 +18,83 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const constant_1 = require("../../common/constant");
 const paging_decorator_1 = require("../../decorators/paging.decorator");
+const roles_decorator_1 = require("../../decorators/roles.decorator");
+const user_decorator_1 = require("../../decorators/user.decorator");
+const auth_guard_1 = require("../../guards/auth.guard");
+const roles_guard_1 = require("../../guards/roles.guard");
+const ICurrentUser_1 = require("../../interfaces/ICurrentUser");
 const category_dto_1 = require("./category.dto");
 const category_service_1 = require("./category.service");
 let CategoryController = class CategoryController {
     constructor(categoryService) {
         this.categoryService = categoryService;
     }
+    createNewCategory(currentUser, categoryDto) {
+        return this.categoryService.createNewCategory(currentUser.id, categoryDto);
+    }
+    updateCategory(currentUser, categoryId, categoryDto) {
+        return this.categoryService.updateCategory({
+            userId: currentUser.id,
+            categoryId,
+            categoryDto
+        });
+    }
+    deleteCategory(currentUser, categoryId) {
+        return this.categoryService.deleteCategory(currentUser.id, categoryId);
+    }
     getAllCategories(paginationOptions) {
         return this.categoryService.getAllCategories(paginationOptions);
     }
-    createNewCategory(categoryDto) {
-        return this.categoryService.createNewCategory(categoryDto);
-    }
 };
+__decorate([
+    common_1.Post(),
+    roles_decorator_1.Roles(constant_1.Role.ADMIN),
+    common_1.UseGuards(new auth_guard_1.AuthGuard('jwt'), roles_guard_1.RolesGuard),
+    swagger_1.ApiBearerAuth(),
+    swagger_1.ApiResponse({
+        status: 201,
+        description: 'Create a new category'
+    }),
+    openapi.ApiResponse({ status: 201, type: Object }),
+    __param(0, user_decorator_1.CurrentUser()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, category_dto_1.CreateCategoryDto]),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "createNewCategory", null);
+__decorate([
+    common_1.Put(':categoryId'),
+    roles_decorator_1.Roles(constant_1.Role.ADMIN),
+    common_1.UseGuards(new auth_guard_1.AuthGuard('jwt'), roles_guard_1.RolesGuard),
+    swagger_1.ApiBearerAuth(),
+    swagger_1.ApiResponse({
+        status: 201,
+        description: 'Update a category'
+    }),
+    openapi.ApiResponse({ status: 200, type: Object }),
+    __param(0, user_decorator_1.CurrentUser()),
+    __param(1, common_1.Param('categoryId')),
+    __param(2, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, category_dto_1.UpdateCategoryDto]),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "updateCategory", null);
+__decorate([
+    common_1.Delete(':categoryId'),
+    roles_decorator_1.Roles(constant_1.Role.ADMIN),
+    common_1.UseGuards(new auth_guard_1.AuthGuard('jwt'), roles_guard_1.RolesGuard),
+    swagger_1.ApiBearerAuth(),
+    swagger_1.ApiResponse({
+        status: 201,
+        description: 'Delete a category'
+    }),
+    openapi.ApiResponse({ status: 200, type: Object }),
+    __param(0, user_decorator_1.CurrentUser()),
+    __param(1, common_1.Param('categoryId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "deleteCategory", null);
 __decorate([
     common_1.Get(),
     swagger_1.ApiResponse({
@@ -43,18 +107,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "getAllCategories", null);
-__decorate([
-    common_1.Post(),
-    swagger_1.ApiResponse({
-        status: 201,
-        description: 'Create a new category'
-    }),
-    openapi.ApiResponse({ status: 201, type: Object }),
-    __param(0, common_1.Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [category_dto_1.CreateCategoryDto]),
-    __metadata("design:returntype", Promise)
-], CategoryController.prototype, "createNewCategory", null);
 CategoryController = __decorate([
     common_1.Controller('categories'),
     swagger_1.ApiTags('Categories'),

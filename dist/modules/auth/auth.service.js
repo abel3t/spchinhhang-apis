@@ -21,17 +21,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const constant_1 = require("../../common/constant");
-const mongodb_1 = require("mongodb");
 const user_entity_1 = require("../../shared/entities/user.entity");
 const user_repository_1 = require("../../shared/repositories/user.repository");
 const cognito_service_1 = require("../../shared/services/cognito.service");
+const utils_1 = require("../../common/utils");
 let AuthService = class AuthService {
     constructor(userRepository, cognitoService) {
         this.userRepository = userRepository;
         this.cognitoService = cognitoService;
     }
     getProfile(id) {
-        return this.userRepository.findOne({ _id: mongodb_1.ObjectID(id) });
+        return this.userRepository.findOne({ _id: utils_1.toObjectId(id) });
     }
     adminSignUp(userDto) {
         return __awaiter(this, void 0, void 0, function* () {
