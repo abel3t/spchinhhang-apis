@@ -2,9 +2,9 @@ import { Column, ObjectID, ObjectIdColumn } from 'typeorm';
 
 export interface IBaseEntity {
   id?: number;
-  createdBy?: number;
+  createdBy?: string;
   createdAt?: number;
-  updatedBy?: number;
+  updatedBy?: string;
   updatedAt?: number;
 }
 
@@ -17,13 +17,13 @@ export class BaseEntity {
   _id: ObjectID;
 
   @Column({ nullable: true })
-  createdBy?: number;
+  createdBy?: string;
 
   @Column({ nullable: true })
   createdAt?: number;
 
   @Column({ nullable: true })
-  updatedBy?: number;
+  updatedBy?: string;
 
   @Column({ nullable: true })
   updatedAt?: number;

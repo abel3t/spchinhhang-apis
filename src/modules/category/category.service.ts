@@ -10,7 +10,11 @@ import { CreateCategoryDto } from './category.dto';
 export class CategoryService {
   constructor(private categoryRepository: CategoryRepository) {}
 
-  async createNewCategory(categoryDto: CreateCategoryDto): Promise<unknown> {
+  // region Admin APIs
+  async createNewCategory(
+    userId: string,
+    categoryDto: CreateCategoryDto
+  ): Promise<unknown> {
     if (categoryDto.parentId) {
       const parentCategory = await this.categoryRepository.findOne({
         _id: ObjectID(categoryDto.parentId)
@@ -22,7 +26,10 @@ export class CategoryService {
         (parentCategory.path || ',') + `${parentCategory._id},`;
     }
 
-    return this.categoryRepository.save(new Category(categoryDto));
+    return this.categoryRepository.save({
+      ...new Category(categoryDto),
+      createdBy: userId
+    });
   }
 
   async getAllCategories(
@@ -30,4 +37,5 @@ export class CategoryService {
   ): Promise<unknown> {
     return this.categoryRepository.paginate(paginationOptions);
   }
+  // endregion
 }

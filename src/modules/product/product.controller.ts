@@ -14,18 +14,7 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
-  @Get()
-  @ApiResponse({
-    status: 201,
-    description: 'Get all products'
-  })
-  getAllProducts(
-    @PaginationParams({ maxLimit: DEFAULT_MAX_LIMIT })
-    paginationOptions: ICustomPagination
-  ): Promise<unknown> {
-    return this.productService.getAllProducts(paginationOptions);
-  }
-
+  // region Admin APIs
   @Post()
   @ApiResponse({
     status: 201,
@@ -40,5 +29,18 @@ export class ProductController {
     @Param() productCategoryDto: AddProductCategoryDto
   ): Promise<unknown> {
     return this.productService.addProductCategory(productCategoryDto);
+  }
+  // endregion
+
+  @Get()
+  @ApiResponse({
+    status: 201,
+    description: 'Get all products'
+  })
+  getAllProducts(
+    @PaginationParams({ maxLimit: DEFAULT_MAX_LIMIT })
+    paginationOptions: ICustomPagination
+  ): Promise<unknown> {
+    return this.productService.getAllProducts(paginationOptions);
   }
 }

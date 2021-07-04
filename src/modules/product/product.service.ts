@@ -10,13 +10,10 @@ import { AddProductCategoryDto, CreateProductDto } from './product.dto';
 export class ProductService {
   constructor(private productRepository: ProductRepository) {}
 
+  // region Product APIs
   async createNewProduct(productDto: CreateProductDto): Promise<unknown> {
     await this.productRepository.save(new Product(productDto));
     return true;
-  }
-
-  getAllProducts(paginationOptions: ICustomPagination): Promise<unknown> {
-    return this.productRepository.paginate(paginationOptions);
   }
 
   async addProductCategory({
@@ -36,5 +33,11 @@ export class ProductService {
         }
       }
     );
+  }
+
+  // endregion
+
+  getAllProducts(paginationOptions: ICustomPagination): Promise<unknown> {
+    return this.productRepository.paginate(paginationOptions);
   }
 }

@@ -13,11 +13,14 @@ export class AuthService {
     private userRepository: UserRepository,
     private cognitoService: CognitoService
   ) {}
+
+  // region User APIs
   getProfile(id: string): Promise<unknown> {
     return this.userRepository.findOne({ _id: ObjectID(id) });
   }
+  // endregion
 
-  // region Admin
+  // region Admin APIs
   async adminSignUp(userDto: UserSignUpDto): Promise<unknown> {
     const { email, name, photo, password } = userDto;
     const role = Role.ADMIN;
