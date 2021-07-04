@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Role } from 'common/constant';
-import { ObjectID } from 'mongodb';
 import { User } from 'shared/entities/user.entity';
 import { UserRepository } from 'shared/repositories/user.repository';
 import { CognitoService } from 'shared/services/cognito.service';
@@ -16,7 +15,7 @@ export class AuthService {
 
   // region User APIs
   getProfile(id: string): Promise<unknown> {
-    return this.userRepository.findOne({ _id: ObjectID(id) });
+    return this.userRepository.findOne({ _id: id });
   }
   // endregion
 

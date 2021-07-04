@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ICustomPagination } from 'decorators/paging.decorator';
-import { ObjectID } from 'mongodb';
 import { Product } from 'shared/entities/product.entity';
 import { ProductRepository } from 'shared/repositories/product.repesitory';
 
@@ -46,7 +45,7 @@ export class ProductService {
   }: AddProductCategoryDto): Promise<unknown> {
     return await this.productRepository.findOneAndUpdate(
       {
-        _id: ObjectID(productId)
+        _id: productId
       },
       {
         $push: {
@@ -65,7 +64,7 @@ export class ProductService {
   }: AddProductCategoryDto): Promise<unknown> {
     return await this.productRepository.findOneAndUpdate(
       {
-        _id: ObjectID(productId)
+        _id: productId
       },
       {
         $pull: {

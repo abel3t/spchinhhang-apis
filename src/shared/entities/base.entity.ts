@@ -14,7 +14,7 @@ export class BaseEntity {
   }
 
   @ObjectIdColumn()
-  _id: ObjectID;
+  _id: string;
 
   @Column({ nullable: true })
   createdBy?: string;

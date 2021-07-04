@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ICustomPagination } from 'decorators/paging.decorator';
-import { ObjectID } from 'mongodb';
 import { Category } from 'shared/entities/category.entity';
 import { CategoryRepository } from 'shared/repositories/category.repository';
 
@@ -17,7 +16,7 @@ export class CategoryService {
   ): Promise<unknown> {
     if (categoryDto.parentId) {
       const parentCategory = await this.categoryRepository.findOne({
-        _id: ObjectID(categoryDto.parentId)
+        _id: categoryDto.parentId
       });
       if (!parentCategory) {
         throw new BadRequestException('Invalid parentId');
@@ -39,7 +38,7 @@ export class CategoryService {
   }: IUpdateCategory): Promise<unknown> {
     if (categoryDto.parentId) {
       const parentCategory = await this.categoryRepository.findOne({
-        _id: ObjectID(categoryDto.parentId)
+        _id: categoryDto.parentId
       });
       if (!parentCategory) {
         throw new BadRequestException('Invalid parentId');
